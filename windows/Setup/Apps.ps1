@@ -8,10 +8,6 @@ Disable-UAC
 # Utility stuff
 ##########################################################################
 
-Function Test-Rust() {
-    return Test-Path -Path (Join-Path $env:USERPROFILE ".cargo");
-}
-
 $Architecture = (Get-WmiObject Win32_OperatingSystem).OSArchitecture;
 $IsArm = $false;
 if($Architecture.StartsWith("ARM")) {
@@ -35,42 +31,43 @@ New-Item -Path $ChocoCachePath -ItemType Directory -Force
 ##########################################################################
 
 choco upgrade --cache="$ChocoCachePath" --yes discord
-choco upgrade --cache="$ChocoCachePath" --yes slack
+
 choco upgrade --cache="$ChocoCachePath" --yes microsoft-edge
+choco upgrade --cache="$ChocoCachePath" --yes googlechrome
+#choco upgrade --cache="$ChocoCachePath" --yes office365business
+choco upgrade --cache="$ChocoCachePath" --yes microsoft-windows-terminal
+
+choco upgrade --cache="$ChocoCachePath" --yes powershell-core
+choco upgrade --cache="$ChocoCachePath" --yes terminal-icons.powershell
+
 choco upgrade --cache="$ChocoCachePath" --yes git
-choco upgrade --cache="$ChocoCachePath" --yes ghostscript.app
+choco upgrade --cache="$ChocoCachePath" --yes git-fork
+
 choco upgrade --cache="$ChocoCachePath" --yes 7zip.install
-choco upgrade --cache="$ChocoCachePath" --yes office365business
 choco upgrade --cache="$ChocoCachePath" --yes screentogif
 choco upgrade --cache="$ChocoCachePath" --yes paint.net
 choco upgrade --cache="$ChocoCachePath" --yes chocolateygui
-choco upgrade --cache="$ChocoCachePath" --yes powershell-core
 choco upgrade --cache="$ChocoCachePath" --yes ripgrep
-choco upgrade --cache="$ChocoCachePath" --yes microsoft-windows-terminal
-choco upgrade --cache="$ChocoCachePath" --yes winsnap
 choco upgrade --cache="$ChocoCachePath" --yes gsudo
 
+choco upgrade --cache="$ChocoCachePath" --yes notepadplusplus
+choco upgrade --cache="$ChocoCachePath" --yes vlc
+choco upgrade --cache="$ChocoCachePath" --yes ffmpeg
+
 if(!$IsArm) {
-    # x86/x64 only    
+    # x86/x64 only
     choco upgrade --cache="$ChocoCachePath" --yes nugetpackageexplorer
     choco upgrade --cache="$ChocoCachePath" --yes docker-for-windows
-    choco upgrade --cache="$ChocoCachePath" --yes geforce-experience
     choco upgrade --cache="$ChocoCachePath" --yes sysinternals
-    choco upgrade --cache="$ChocoCachePath" --yes nodejs
-    choco upgrade --cache="$ChocoCachePath" --yes cmake
+    choco upgrade --cache="$ChocoCachePath" --yes nvm
     choco upgrade --cache="$ChocoCachePath" --yes curl
     choco upgrade --cache="$ChocoCachePath" --yes vscode
-    choco upgrade --cache="$ChocoCachePath" --yes visualstudio2022professional --package-parameters "--add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --norestart --passive --locale en-US"
+    choco upgrade --cache="$ChocoCachePath" --yes visualstudio2022community --package-parameters "--add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --norestart --passive --locale en-US"
     choco upgrade --cache="$ChocoCachePath" --yes dotpeek --pre
     choco upgrade --cache="$ChocoCachePath" --yes poshgit
+    choco upgrade --cache="$ChocoCachePath" --yes asmspy
     choco upgrade --cache="$ChocoCachePath" --yes powertoys
     choco upgrade --cache="$ChocoCachePath" --yes sql-server-management-studio
-
-    # Move this to separate installer
-    choco upgrade --cache="$ChocoCachePath" --yes steam
-    choco upgrade --cache="$ChocoCachePath" --yes uplay
-    choco upgrade --cache="$ChocoCachePath" --yes streamdeck
-    choco upgrade --cache="$ChocoCachePath" --yes epicgameslauncher        
 }
 
 ##########################################################################
@@ -145,23 +142,6 @@ Write-Host "Installing Visual Studio extensions" -ForegroundColor Yellow
 Write-Host "NOTE: Script might appear unresponsive"
 
 Install-VSExtension -PackageName "MadsKristensen.Tweaks"
-
-##########################################################################
-# Install Rust
-##########################################################################
-
-if(!$IsArm) {
-    if (!(Test-Rust)) {
-        Write-Host "Installing Rust..."
-        $Client = New-Object System.Net.WebClient;
-        $Client.DownloadFile("https://win.rustup.rs/x86_64", "$HOME/Downloads/rustup-init.exe");
-        Start-Process -FilePath "$HOME/Downloads/rustup-init.exe" -NoNewWindow -Wait -ArgumentList "-y";
-        RefreshEnv
-    } else {
-        Write-Host "Updating Rust..."
-        rustup update
-    }
-}
 
 ##########################################################################
 # Install posh-git
