@@ -54,7 +54,7 @@ Disable-BingSearch
 Disable-GameBarTips
 
 Set-ItemProperty -Path "HKLM:SYSTEM\CurrentControlSet\Control\FileSystem" -Name LongPathsEnabled -Type DWord -Value 1
-Set-WindowsExplorerOptions -EnableShowFileExtensions
+Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowFileExtensions
 
 ##########################################################################
 # Power settings
