@@ -104,6 +104,22 @@ Set-ItemProperty -Path HKLM:\Software\Microsoft\PolicyManager\default\WiFi\Allow
 Set-ItemProperty -Path HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots -Name value -Type DWord -Value 0
 
 ##########################################################################
+# Virus & Threat Protection
+##########################################################################
+
+# Turn off Tamper Protection
+#If (-Not (Test-Path "HKLM:\SOFTWARE\Microsoft\Windows Defender\Features\TamperProtection")) {
+#    New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows Defender\Features\TamperProtection" | Out-Null
+#}
+#Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows Defender\Features\TamperProtection" -Name value -Type DWord -Value 0
+
+# Turn off Microsoft Defender Antivirus
+If (-Not (Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\DisableAntiSpyware")) {
+    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\DisableAntiSpyware" | Out-Null
+}
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\DisableAntiSpyware" -Name value -Type DWord -Value 1
+
+##########################################################################
 # User interface
 ##########################################################################
 

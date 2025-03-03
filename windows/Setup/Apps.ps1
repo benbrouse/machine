@@ -50,6 +50,9 @@ choco upgrade --cache="$ChocoCachePath" --yes chocolateygui
 choco upgrade --cache="$ChocoCachePath" --yes ripgrep
 choco upgrade --cache="$ChocoCachePath" --yes gsudo
 
+choco upgrade --cache="$ChocoCachePath" --yes putty
+choco upgrade --cache="$ChocoCachePath" --yes winscp
+
 choco upgrade --cache="$ChocoCachePath" --yes notepadplusplus
 choco upgrade --cache="$ChocoCachePath" --yes vlc
 choco upgrade --cache="$ChocoCachePath" --yes ffmpeg
@@ -142,6 +145,10 @@ Write-Host "Installing Visual Studio extensions" -ForegroundColor Yellow
 Write-Host "NOTE: Script might appear unresponsive"
 
 Install-VSExtension -PackageName "MadsKristensen.Tweaks"
+Install-VSExtension -PackageName "MadsKristensen.MarkdownEditor64"
+Install-VSExtension -PackageName "MadsKristensen.RainbowBraces"
+Install-VSExtension -PackageName "MadsKristensen.ClearMEFComponentCache"
+Install-VSExtension -PackageName "NikolayBalakin.Outputenhancer"
 
 ##########################################################################
 # Install posh-git
