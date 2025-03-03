@@ -38,6 +38,13 @@ install_cask slack
 install_cask discord
 install_cask marta
 install_cask spotify
+install_package bat
+install_package git-delta
+install_package eza
+install_package gh
+install_package gitui
+install_cask unnaturalscrollwheels
+install_package swift-format
 
 ########################################################
 # OH-MY-POSH
